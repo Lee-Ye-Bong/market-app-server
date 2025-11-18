@@ -71,7 +71,7 @@ app.use("/api/chat", chatRouter);
     await mongoose.connect(process.env.MONGO_URI!);
     console.log("MongoDB connected");
 
-    const port = Number(process.env.PORT) || 4000;
+    const port = Number(process.env.PORT) || 3000;
     const host = process.env.HOST ?? "0.0.0.0"; // 외부 접근 허용
 
     // HTTP 서버 + Socket.IO 서버

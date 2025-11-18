@@ -1,20 +1,23 @@
-# 1. Node.js 20 버전 사용 (가벼운 Alpine 리눅스)
-FROM node:20-alpine
+# 1. Node 공식 이미지 사용
+FROM node:18
 
-# 2. 컨테이너 안에서 작업 디렉토리 설정
+# 2. 작업 폴더 생성
 WORKDIR /app
 
-# 3. 패키지 정보 먼저 복사
+# 3. package.json & package-lock.json 복사
 COPY package*.json ./
 
-# 4. 의존성 설치
+# 4. 의존성 설치 (devDependencies 포함)
 RUN npm install
 
-# 5. 나머지 소스 코드 전체 복사
+# 5. 모든 소스 파일 복사
 COPY . .
 
-# 6. 실행 환경
-ENV NODE_ENV=production
+# 6. TypeScript 빌드
+RUN npm run build
 
-# 7. 서버 실행 (package.json의 "start": "tsx src/app.ts" 사용)
+# 7. 3000 포트 노출 (Railway가 자동 설정)
+EXPOSE 3000
+
+# 8. 실행 명령 (dist 폴더 실행)
 CMD ["npm", "start"]
